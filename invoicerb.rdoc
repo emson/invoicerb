@@ -1,0 +1,5 @@
+= invoicerb
+
+Generate this with
+    invoicerb rdoc
+After you have described your command line interface

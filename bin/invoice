@@ -1,0 +1,93 @@
+#!/usr/bin/env ruby
+require 'gli'
+# begin # XXX: Remove this begin/rescue before distributing your app
+# require 'invoicerb'
+# rescue LoadError
+#   STDERR.puts "In development, you need to use `bundle exec bin/invoicerb` to run your app"
+#   STDERR.puts "At install-time, RubyGems will make sure lib, etc. are in the load path"
+#   STDERR.puts "Feel free to remove this message from bin/invoicerb now"
+#   exit 64
+# end
+
+require_relative '../lib/invoicerb'
+
+include GLI::App
+
+program_desc 'Invoicerb: Simple commandline invoicing.'
+
+version Invoicerb::VERSION
+
+desc 'Create the initial invoice structure'
+command :init do |c|
+  c.action do |global_options,options,args|
+    command = Invoicerb::InitCommand.new
+    command.generate_dot_dir
+  end
+end
+
+desc 'Create a new invoice meta file'
+arg_name 'invoice_name'
+command :new do |c|
+  # c.desc 'Describe a switch to init'
+  # c.switch :s
+  # c.desc 'specify the name of your invoice'
+  # c.default_value 'some_default'
+  # c.flag :n
+  c.action do |global_options, options, args|
+    # help_now!('invoice_name is required') if args.empty?
+    invoice_name = args.shift
+    invoice_name = 'example_invoice' if invoice_name.nil? || invoice_name.empty?
+    tokens = { :invoice_name => invoice_name }
+    command = Invoicerb::NewCommand.new
+    command.create_invoice_file(tokens)
+  end
+end
+
+
+desc 'Build an invoice PDF'
+arg_name 'invoice_name'
+command :build do |c|
+  # c.desc 'Describe a switch to init'
+  # c.switch :s
+  # c.desc 'specify the name of your invoice'
+  # c.default_value 'some_default'
+  # c.flag :n
+  c.action do |global_options, options, args|
+    help_now!('invoice_name is required') if args.empty?
+    invoice_name = args.shift
+    tokens = { :invoice_name => invoice_name }
+    command = Invoicerb::BuildCommand.new
+    command.build_invoice(tokens)
+  end
+end
+
+# desc 'Describe some switch here'
+# switch [:s,:switch]
+
+# desc 'Describe some flag here'
+# default_value 'the default'
+# arg_name 'The name of the argument'
+# flag [:f,:flagname]
+
+pre do |global,command,options,args|
+  # Pre logic here
+  # Return true to proceed; false to abort and not call the
+  # chosen command
+  # Use skips_pre before a command to skip this block
+  # on that command only
+  true
+end
+
+post do |global,command,options,args|
+  # Post logic here
+  # Use skips_post before a command to skip this
+  # block on that command only
+end
+
+on_error do |exception|
+  # Error logic here
+  # return false to skip default error handling
+  true
+end
+
+exit run(ARGV)

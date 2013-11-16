@@ -1,0 +1,3 @@
+
+RSpec::Core::RakeTask.new
+
