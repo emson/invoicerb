@@ -1,4 +1,4 @@
-# Invoicerb: Simple commandline invoicing
+# Invoicerb: Simple command line invoicing
 
 ## Installation
 
@@ -8,14 +8,14 @@ Install **invoicerb** as a gem:
 
 ## Commands
 
-Invoicerb is a commandline tool and can be executed using the `invoice` command from your terminal.
+Invoicerb is a command line tool and can be executed using the `invoice` command from your terminal.
 
     invoice
 
 This will output something like this:
 
     NAME
-        invoice - Invoicerb: Simple commandline invoicing.
+        invoice - Invoicerb: Simple command line invoicing.
 
     SYNOPSIS
         invoice [global options] command [command options] [arguments...]
