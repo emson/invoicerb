@@ -5,7 +5,7 @@ module Invoicerb
     def initialize(tax=20)
       # default settings
       @tax        = tax
-      @date       = DateTime.now.to_s
+      @date       = DateTime.now.strftime('%Y-%m-%d')
       @invoice_id = 'INV00001'
       @client     = 'No Client Set'
     end
@@ -35,7 +35,7 @@ module Invoicerb
       instance_eval(File.read(filename))
     end
 
-    def date(my_date)
+    def date(my_date=@date)
       @date = my_date
     end
 

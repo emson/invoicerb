@@ -1,4 +1,4 @@
-date '2011-11-11'
+date 
 invoice_id 'BCC00001'
 client "Big Client Company" do
   job '1', "Build web page", 'GBP100', '10%'
