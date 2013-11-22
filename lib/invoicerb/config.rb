@@ -14,7 +14,7 @@ module Invoicerb
     end
 
     def default_config
-      File.join([default_config_dir, 'invoicerb'])
+      File.join([default_config_dir, 'config.yml'])
     end
 
     def default_config_templates

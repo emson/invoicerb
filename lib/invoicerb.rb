@@ -12,6 +12,7 @@ require 'prawn'
 
 require_relative 'invoicerb/version'
 require_relative 'invoicerb/config'
+require_relative 'invoicerb/utils'
 require_relative 'invoicerb/template_handler'
 require_relative 'invoicerb/init_command'
 require_relative 'invoicerb/new_command'
