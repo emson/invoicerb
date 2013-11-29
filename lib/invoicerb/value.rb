@@ -1,9 +1,10 @@
 # encoding: UTF-8
 module Invoicerb
   class Value
-    attr_reader :prefix, :number, :suffix, :tokens
+    attr_reader :raw_prefix, :prefix, :number, :suffix, :tokens, :rounding
 
-    def initialize(hash)
+    def initialize(hash, rounding=:currency)
+      @rounding = rounding
       @tokens = extract_from(hash)
     end
 
@@ -20,7 +21,8 @@ module Invoicerb
 
     def format_number(number)
       return unless number
-      sprintf("%.2f", number)
+      return sprintf("%.2f", number) if rounding == :currency
+      sprintf("%g", number)
     end
 
     def format_suffix(suffix)
@@ -34,9 +36,10 @@ module Invoicerb
       # extract from GBP456.23% to be
       # { prefix:GBP, number:456.23, suffix:% }
       regx = /([a-zA-Z]*)(\d+[\.]*\d*)([a-zA-Z%]*)/.match(str)
-      @prefix   = format_prefix((regx[1].empty?) ? nil : regx[1])
-      @number   = format_number((regx[2].empty?) ? nil : regx[2])
-      @suffix   = format_suffix((regx[3].empty?) ? nil : regx[3])
+      @raw_prefix   = (regx[1].empty?) ? nil : regx[1]
+      @prefix       = format_prefix(@raw_prefix)
+      @number       = format_number((regx[2].empty?) ? nil : regx[2])
+      @suffix       = format_suffix((regx[3].empty?) ? nil : regx[3])
       { prefix:@prefix, number:@number, suffix:@suffix }
     end
 

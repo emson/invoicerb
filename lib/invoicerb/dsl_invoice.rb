@@ -1,18 +1,21 @@
 # encoding: UTF-8
 module Invoicerb
   class DslInvoice
+    include Utils
 
-    def initialize(tax=20)
+    def initialize
       # default settings
-      @tax        = tax
       @date       = DateTime.now.strftime('%Y-%m-%d')
       @invoice_id = 'INV00001'
       @client     = 'No Client Set'
     end
 
-    # TODO GET PREFIX
     def prefix
-      @prefix = 'GBP'
+      @prefix ||= config.env_currency
+    end
+
+    def tax_rate
+      @tax_rate ||= config.env_vat
     end
 
     def jobs
@@ -35,7 +38,7 @@ module Invoicerb
       instance_eval(File.read(filename))
     end
 
-    def date(my_date=@date)
+    def date(my_date)
       @date = my_date
     end
 
@@ -50,7 +53,7 @@ module Invoicerb
     end
 
     def job(qty, desc, price, discount)
-      quantity = Value.new(qty)
+      quantity = Value.new(qty, :quantity)
       price    = Value.new(price)
       discount = Value.new(discount)
       total    = Value.new(build_job_total(quantity, price, discount))
@@ -65,7 +68,7 @@ module Invoicerb
 
     def build_job_total(quantity, price, discount)
       total = calculator.calculate(quantity, price, discount)
-      build_str(price.prefix, total)
+      build_str(price.raw_prefix, total)
     end
 
     def build_str(prefix, number, suffix=nil)
@@ -89,7 +92,7 @@ module Invoicerb
     end
 
     def vat(price)
-      price * (@tax / 100.00)
+      price * (tax_rate / 100.00)
     end
 
     def to_hash

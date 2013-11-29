@@ -18,7 +18,7 @@ spec = Gem::Specification.new do |s|
   s.bindir = 'bin'
 
   s.has_rdoc = true
-  s.extra_rdoc_files = ['README.rdoc','invoicerb.rdoc']
+  s.extra_rdoc_files = ['README.md','invoicerb.rdoc']
   s.rdoc_options << '--title' << 'invoicerb' << '--main' << 'README.rdoc' << '-ri'
 
   s.executables << 'invoice'

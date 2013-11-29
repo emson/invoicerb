@@ -1,12 +1,17 @@
 module Invoicerb
 
   class FormatterContent
-    def initialize(data_hash)
+    def initialize(data_hash, config_hash)
       @data = data_hash
+      @config_hash = config_hash
     end
 
     def data
       @data
+    end
+
+    def config_hash
+      @config_hash
     end
 
     def jobs
@@ -21,13 +26,19 @@ module Invoicerb
     def build_job(job)
       quantity = job[:quantity]
       desc_val = job[:desc]
-      discount_val = merge_values(job[:discount])
-      price_val    = merge_values(job[:price])
-      price_total_val    = merge_values(job[:total])
+      discount_val    = merge_values(job[:discount])
+      price_val       = merge_values(job[:price])
+      price_total_val = merge_values(job[:total])
 
       number_val   = quantity[:number]
       unit_val     = quantity[:suffix]
-      [number_val, unit_val, desc_val, discount_val, '20%', price_val, price_total_val]
+      [number_val, unit_val, desc_val, discount_val, vat_str, price_val, price_total_val]
+    end
+
+    def vat_str
+      vat = config_hash['vat']
+      vat = 0 if vat.nil?
+      "#{vat}%"
     end
 
     def data_totals
@@ -38,9 +49,9 @@ module Invoicerb
       [
         [{:content => "<b>Total without taxes</b>" , :colspan => 6, :align => :right, inline_format:true }, total_without_taxes],
         [{:content => "<b>Discounts</b>"           , :colspan => 6, :align => :right, inline_format:true }, total_discounts],
-        [{:content => "<b>VAT(20%)</b>"            , :colspan => 6, :align => :right, inline_format:true }, total_vat],
+        [{:content => "<b>VAT(#{vat_str})</b>"     , :colspan => 6, :align => :right, inline_format:true }, total_vat],
         [{:content => "<b>Total taxes</b>"         , :colspan => 6, :align => :right, inline_format:true }, total_vat],
-        [{:content => "<b>TOTAL</b>"               , :colspan => 6, :align => :right, inline_format:true }, {:content => "<b>#{total}", :inline_format => true} ]
+        [{:content => "<b>TOTAL</b>"               , :colspan => 6, :align => :right, inline_format:true }, {:content => "<b>#{total}</b>", :inline_format => true} ]
       ]
     end
 
