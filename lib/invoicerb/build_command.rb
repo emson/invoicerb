@@ -4,7 +4,6 @@ module Invoicerb
     include Utils
 
     def build_invoice(tokens)
-      binding.pry
       dsl_invoice.dsl_load(invoice_name(tokens))
       invoice_hash = dsl_invoice.to_hash
       config_hash  = config.config

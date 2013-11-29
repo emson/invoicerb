@@ -5,17 +5,11 @@ module Invoicerb
 
     def build(formatter, config_hash, output_file='output.pdf')
       @formatter = formatter
-      puts "=========== before title"
       title
-      puts "=========== before invoice_details"
       invoice_details
-      puts "=========== before contact"
       contact
-      puts "=========== before description"
       description
-      puts "=========== before items_table"
       items_table(data, data_totals)
-      puts "=========== before payment_details"
       payment_details
       footer
       pdf.render_file(output_file)

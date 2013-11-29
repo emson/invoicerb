@@ -13,7 +13,8 @@ module Invoicerb
     end
 
     def write_file(source, target, tokens)
-      create_file(target, read_template(source), tokens) if File.file?(source)
+      return unless File.file?(source)
+      create_file(target, read_template(source), tokens)
     end
 
 
@@ -47,7 +48,7 @@ module Invoicerb
     def create_file(destination, data, tokens)
       unless File.exists? destination
         ::FileUtils.mkdir_p(File.dirname(destination))
-        File.open(destination, 'wb') { |f| f.write apply_template(data, tokens) }
+        File.open(destination, 'wb') { |f| f.write(apply_template(data, tokens)) }
         say(File.expand_path(destination))
       else
         say(File.expand_path(destination), '  -x ')

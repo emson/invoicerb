@@ -15,7 +15,6 @@ module Invoicerb
     end
 
     def tax_rate
-      puts "=========== #{config.env_vat}"
       @tax_rate ||= config.env_vat
     end
 
@@ -39,7 +38,7 @@ module Invoicerb
       instance_eval(File.read(filename))
     end
 
-    def date(my_date=@date)
+    def date(my_date)
       @date = my_date
     end
 
@@ -93,7 +92,7 @@ module Invoicerb
     end
 
     def vat(price)
-      price * (@tax_rate / 100.00)
+      price * (tax_rate / 100.00)
     end
 
     def to_hash

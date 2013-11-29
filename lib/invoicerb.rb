@@ -23,6 +23,8 @@ require_relative 'invoicerb/formatter_content'
 require_relative 'invoicerb/calculator'
 require_relative 'invoicerb/value'
 
+require 'pry' if Invoicerb::Config.instance.environment == 'development'
+
 module Invoicerb
   DOT_DIR = '.invoicerb'
 end
