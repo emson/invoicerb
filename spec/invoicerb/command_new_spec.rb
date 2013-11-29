@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 module Invoicerb
-  describe NewCommand do
+  describe CommandNew do
 
-    subject { NewCommand.new }
+    subject { CommandNew.new }
     let(:tokens) { { invoice_name:'some_invoice' } }
 
     it "should create the invoice file" do

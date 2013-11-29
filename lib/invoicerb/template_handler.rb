@@ -6,8 +6,11 @@ module Invoicerb
     # target path
     def write_file_system(source, target, tokens)
       Dir.glob(File.join(source, '**', '*')).select do |file|
+        # strip off the beginning path, specific to tempaltes
         partial_path = path_strip(file, File.join(template_dir, '_name_'))
+        # prepend the target path to the template listing
         target_path = File.join([target, partial_path])
+        # write files / dirs to file system
         write_file(file, target_path, tokens)
       end
     end

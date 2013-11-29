@@ -1,6 +1,6 @@
 # encoding: UTF-8
 module Invoicerb
-  class InitCommand
+  class CommandInit
 
     def generate_dot_dir
       template_handler.write_file_system(source, target, {})

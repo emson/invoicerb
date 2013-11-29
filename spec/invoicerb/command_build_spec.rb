@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 module Invoicerb
-  describe BuildCommand do
+  describe CommandBuild do
 
-    subject { BuildCommand.new }
+    subject { CommandBuild.new }
     let(:tokens) { { invoice_name:'some_invoice', output_name:'some_invoice.pdf' } }
 
     it "should build an invoice PDF" do
@@ -16,7 +16,7 @@ module Invoicerb
       subject.build_invoice(tokens)
     end
 
-    context 'BuildCommand#output_name' do
+    context 'CommandBuild#output_name' do
 
       it "should create an output name based on the invoice name if none provided" do
         tokens = { invoice_name:'chicken_invoice' }
