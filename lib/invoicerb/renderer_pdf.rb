@@ -25,7 +25,8 @@ module Invoicerb
     def items_table(data, data_totals)
       pdf.move_down 20
       pdf.font_size(SIZE) do
-        pdf.table(data, :position => :center, :row_colors => ["FFFFFF"], :header => true, :column_widths => {0=>20,1=>30,3=>50,4=>10,5=>70,6=>70}) do
+        # pdf.table(data, :position => :center, :row_colors => ["FFFFFF"], :header => true, :width => 540, :column_widths => {0=>5,1=>5,2=>290,3=>40,4=>50,5=>50}) do
+        pdf.table(data, :position => :left, :row_colors => ["FFFFFF"], :header => true, :width => 520) do
           # set table header
           row(0).borders = [:bottom]
           row(0).border_width = 2
@@ -34,26 +35,18 @@ module Invoicerb
           (1..data.size - 2).each do |i|
             row(i).borders = [:bottom]
           end
-          # clear formatting for the last row
-          row(data.size - 1).borders = []
-          row(data.size - 1).padding = 0
+          # change formatting for the totals rows
+          row_start = data.size - 5
+          row_end   = data.size - 1
+          row(row_start..row_end).borders = []
+          # underline the grand total cells in bold
+          cols = cells.columns(2..-1)
+          selected_cells = cols.rows(data.size - 2..-1)
+          selected_cells.borders = [:bottom]
+          selected_cells.border_width = 2
         end
       end
     end
-
-    def totals_table(data_totals)
-      pdf.make_table(data_totals, :column_widths => {0=>125}) do
-        (0..data_totals.size - 1).each do |i|
-          # clear formatting for all items except last
-          row(i).borders = []
-        end
-        (data_totals.size - 1..data_totals.size).each do |i|
-          # underline the final totals row
-          row(i).borders = [:top, :bottom]
-        end
-      end
-    end
-
 
     def data
       # [
@@ -64,10 +57,11 @@ module Invoicerb
       #   [ {:content => "", :colspan => 4}, {:content => totals_table(data_totals), :colspan => 3}]
       # ]
       rows = []
-      rows << ['Qty', 'Unit', 'Description', 'Discount', 'Tax', 'Price', 'Total']
+      rows << ['Qty', 'Unit', 'Description', 'Discount', 'Price', 'Total']
       jobs =  @formatter.jobs
       rows = rows + jobs
-      rows << [ {:content => "", :colspan => 4}, {:content => totals_table(data_totals), :colspan => 3}]
+      # rows << [ {:content => "", :colspan => 3}, {:content => 'Discounts', :align => :right, :colspan => 2}, 'pow']
+      rows = rows + data_totals
       rows
     end
 
@@ -120,7 +114,7 @@ module Invoicerb
 
 
     def payment_details
-      pdf.bounding_box([0, 100], :width => pdf.bounds.width, :height => 100) do
+      pdf.bounding_box([0, 120], :width => pdf.bounds.width, :height => 120) do
         pdf.stroke_horizontal_rule
         pdf.font_size(SIZE) do
           pdf.pad(20) do

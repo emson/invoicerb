@@ -32,7 +32,7 @@ module Invoicerb
 
       number_val   = quantity[:number]
       unit_val     = quantity[:suffix]
-      [number_val, unit_val, desc_val, discount_val, vat_str, price_val, price_total_val]
+      [number_val, unit_val, desc_val, discount_val, price_val, price_total_val]
     end
 
     def vat_str
@@ -47,11 +47,11 @@ module Invoicerb
       total_vat           = merge_values(data[:total_vat])
       total               = merge_values(data[:total])
       [
-        [{:content => "<b>Total without taxes</b>" , :colspan => 6, :align => :right, inline_format:true }, total_without_taxes],
-        [{:content => "<b>Discounts</b>"           , :colspan => 6, :align => :right, inline_format:true }, total_discounts],
-        [{:content => "<b>VAT(#{vat_str})</b>"     , :colspan => 6, :align => :right, inline_format:true }, total_vat],
-        [{:content => "<b>Total taxes</b>"         , :colspan => 6, :align => :right, inline_format:true }, total_vat],
-        [{:content => "<b>TOTAL</b>"               , :colspan => 6, :align => :right, inline_format:true }, {:content => "<b>#{total}</b>", :inline_format => true} ]
+        [{:content => "", :colspan => 3}, {:content => "<b>Total without taxes</b>" , :colspan => 2, :align => :right, inline_format:true }, total_without_taxes],
+        [{:content => "", :colspan => 3}, {:content => "<b>Discounts</b>"           , :colspan => 2, :align => :right, inline_format:true }, total_discounts],
+        [{:content => "", :colspan => 3}, {:content => "<b>VAT(#{vat_str})</b>"     , :colspan => 2, :align => :right, inline_format:true }, total_vat],
+        [{:content => "", :colspan => 3}, {:content => "<b>Total taxes</b>"         , :colspan => 2, :align => :right, inline_format:true }, total_vat],
+        [{:content => "", :colspan => 3}, {:content => "<b>TOTAL</b>"               , :colspan => 2, :align => :right, inline_format:true }, {:content => "<b>#{total}</b>", :inline_format => true} ]
       ]
     end
 
