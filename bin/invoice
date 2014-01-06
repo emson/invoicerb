@@ -20,7 +20,7 @@ version Invoicerb::VERSION
 desc 'Create the initial invoice structure'
 command :init do |c|
   c.action do |global_options,options,args|
-    command = Invoicerb::InitCommand.new
+    command = Invoicerb::CommandInit.new
     command.generate_dot_dir
   end
 end
@@ -38,7 +38,7 @@ command :new do |c|
     invoice_name = args.shift
     invoice_name = 'example_invoice' if invoice_name.nil? || invoice_name.empty?
     tokens = { :invoice_name => invoice_name }
-    command = Invoicerb::NewCommand.new
+    command = Invoicerb::CommandNew.new
     command.create_invoice_file(tokens)
   end
 end
@@ -56,7 +56,7 @@ command :build do |c|
     help_now!('invoice_name is required') if args.empty?
     invoice_name = args.shift
     tokens = { :invoice_name => invoice_name }
-    command = Invoicerb::BuildCommand.new
+    command = Invoicerb::CommandBuild.new
     command.build_invoice(tokens)
   end
 end

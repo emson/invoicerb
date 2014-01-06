@@ -1,6 +1,6 @@
 # encoding: UTF-8
 module Invoicerb
-  class NewCommand
+  class CommandNew
 
     def create_invoice_file(tokens)
       template_handler.write_file(source, target(tokens), apply_defaults(tokens))

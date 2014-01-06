@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 module Invoicerb
-  describe InitCommand do
+  describe CommandInit do
 
-    subject { InitCommand.new }
+    subject { CommandInit.new }
 
     it "should create a .invoicerb dir in the HOME directory" do
       subject.stub(:source).and_return('source_path')

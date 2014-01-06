@@ -1,6 +1,6 @@
 # encoding: UTF-8
 module Invoicerb
-  class BuildCommand
+  class CommandBuild
     include Utils
 
     def build_invoice(tokens)

@@ -43,7 +43,7 @@ module Invoicerb
     end
 
     def invoice_id(my_invoice_id)
-      @invoice_id =  my_invoice_id
+      @invoice_id = my_invoice_id
     end
 
     def client(my_client, &block)
