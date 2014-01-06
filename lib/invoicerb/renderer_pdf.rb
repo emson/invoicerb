@@ -36,7 +36,7 @@ module Invoicerb
             row(i).borders = [:bottom]
           end
           # change formatting for the totals rows
-          row_start = data.size - 5
+          row_start = data.size - 4
           row_end   = data.size - 1
           row(row_start..row_end).borders = []
           # underline the grand total cells in bold
@@ -114,7 +114,7 @@ module Invoicerb
 
 
     def payment_details
-      pdf.bounding_box([0, 120], :width => pdf.bounds.width, :height => 120) do
+      pdf.bounding_box([0, 100], :width => pdf.bounds.width, :height => 120) do
         pdf.stroke_horizontal_rule
         pdf.font_size(SIZE) do
           pdf.pad(20) do
