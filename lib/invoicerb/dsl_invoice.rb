@@ -96,6 +96,7 @@ module Invoicerb
     end
 
     def to_hash
+      # TODO refactor totals into a totals sub array
       {
         date: @date,
         invoice_id: @invoice_id,

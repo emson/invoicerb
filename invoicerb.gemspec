@@ -29,6 +29,7 @@ spec = Gem::Specification.new do |s|
 
   s.add_runtime_dependency('mustache')
   s.add_runtime_dependency('gli','2.8.1')
-  s.add_runtime_dependency('prawn', '~>1.0.0.rc1')
+  s.add_runtime_dependency('prawn', '0.13.1')
+  # s.add_runtime_dependency('prawn', '~>1.0.0.rc1')
 end
 

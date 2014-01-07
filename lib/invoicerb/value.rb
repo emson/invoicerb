@@ -3,6 +3,7 @@ module Invoicerb
   class Value
     attr_reader :raw_prefix, :prefix, :number, :suffix, :tokens, :rounding
 
+    # TODO write some tests for Value re extract_from
     def initialize(hash, rounding=:currency)
       @rounding = rounding
       @tokens = extract_from(hash)
@@ -36,11 +37,17 @@ module Invoicerb
       # extract from GBP456.23% to be
       # { prefix:GBP, number:456.23, suffix:% }
       regx = /([a-zA-Z]*)(\d+[\.]*\d*)([a-zA-Z%]*)/.match(str)
-      @raw_prefix   = (regx[1].empty?) ? nil : regx[1]
+      @raw_prefix   = extract_value(regx, 1)
       @prefix       = format_prefix(@raw_prefix)
-      @number       = format_number((regx[2].empty?) ? nil : regx[2])
-      @suffix       = format_suffix((regx[3].empty?) ? nil : regx[3])
+      @number       = format_number( extract_value(regx, 2) )
+      @suffix       = format_suffix( extract_value(regx, 3) )
       { prefix:@prefix, number:@number, suffix:@suffix }
+    end
+
+    def extract_value(regx, index)
+      return nil unless regx
+      return nil if regx[index].empty?
+      regx[index]
     end
 
   end
