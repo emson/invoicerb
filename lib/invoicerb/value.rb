@@ -4,9 +4,9 @@ module Invoicerb
     attr_reader :raw_prefix, :prefix, :number, :suffix, :tokens, :rounding
 
     # TODO write some tests for Value re extract_from
-    def initialize(hash, rounding=:currency)
+    def initialize(str, rounding=:currency)
       @rounding = rounding
-      @tokens = extract_from(hash)
+      @tokens = extract_from(str)
     end
 
     def to_hash
