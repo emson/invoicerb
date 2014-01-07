@@ -31,8 +31,6 @@ module Invoicerb
       suffix.downcase
     end
 
-    private
-
     def extract_from(str)
       # extract from GBP456.23% to be
       # { prefix:GBP, number:456.23, suffix:% }
