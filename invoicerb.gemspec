@@ -1,11 +1,12 @@
 # Ensure we require the local version and not one we might have installed already
 require File.join([File.dirname(__FILE__),'lib','invoicerb','version.rb'])
-spec = Gem::Specification.new do |s|
+Gem::Specification.new do |s|
   s.name = 'invoicerb'
   s.version = Invoicerb::VERSION
   s.author = 'B. F. B. Emson'
   s.email = 'mail@emson.co.uk'
   s.homepage = 'http://blog.emson.co.uk'
+  s.licenses = ['MIT']
   s.platform = Gem::Platform::RUBY
   s.summary = 'Invoicerb: Simple commandline invoicing'
   s.description = %q{A command line tool that makes it very easy to create invoices. }
