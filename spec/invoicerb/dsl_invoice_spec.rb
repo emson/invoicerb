@@ -28,22 +28,23 @@ module Invoicerb
                                   :invoice_id=>"INV00001",
                                   :client=>"No Client Set",
                                   :jobs=>[],
-                                  :total_without_taxes=>{
-                                    :prefix=>"£",
-                                    :number=>"0.00",
-                                    :suffix=>nil},
-                                  :total_discounts=>{
-                                    :prefix=>"£",
-                                    :number=>"0.00",
-                                    :suffix=>nil},
-                                  :total_vat=>{
-                                    :prefix=>"£",
-                                    :number=>"0.00",
-                                    :suffix=>nil},
-                                  :total=>{
-                                    :prefix=>"£",
-                                    :number=>"0.00",
-                                    :suffix=>nil}}
+                                  :totals=>{
+                                    :total_without_taxes=>{
+                                      :prefix=>"£",
+                                      :number=>"0.00",
+                                      :suffix=>nil},
+                                    :total_discounts=>{
+                                      :prefix=>"£",
+                                      :number=>"0.00",
+                                      :suffix=>nil},
+                                    :total_vat=>{
+                                      :prefix=>"£",
+                                      :number=>"0.00",
+                                      :suffix=>nil},
+                                    :total=>{
+                                      :prefix=>"£",
+                                      :number=>"0.00",
+                                      :suffix=>nil}}}
     end
 
   end
