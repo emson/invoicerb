@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    invoicerb (0.0.1)
+    invoicerb (0.1.0)
       gli (= 2.8.1)
       mustache
       prawn (= 0.13.1)

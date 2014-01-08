@@ -1,4 +1,6 @@
 # encoding: UTF-8
+require_relative '../invoicerb' if __FILE__ == $0
+
 module Invoicerb
   class DslInvoice
     include Utils
@@ -102,10 +104,12 @@ module Invoicerb
         invoice_id: @invoice_id,
         client: @client,
         jobs: jobs,
-        total_without_taxes: Value.new(build_str(prefix, total_without_taxes)).to_hash,
-        total_discounts:     Value.new(build_str(prefix, total_discounts)).to_hash,
-        total_vat:           Value.new(build_str(prefix, total_vat)).to_hash,
-        total:               Value.new(build_str(prefix, total)).to_hash,
+        totals: {
+          total_without_taxes: Value.new(build_str(prefix, total_without_taxes)).to_hash,
+          total_discounts:     Value.new(build_str(prefix, total_discounts)).to_hash,
+          total_vat:           Value.new(build_str(prefix, total_vat)).to_hash,
+          total:               Value.new(build_str(prefix, total)).to_hash,
+        }
       }
     end
 
@@ -113,9 +117,6 @@ module Invoicerb
 end
 
 if __FILE__ == $0
-  require 'date'
-  require 'invoicerb/value'
-  require 'invoicerb/calculator'
   # puts ARGV[0]
   # filepath = File.join([ File.dirname(__FILE__), 'example_invoice.rb' ])
   filepath = File.join([  'example_invoice.rb' ])

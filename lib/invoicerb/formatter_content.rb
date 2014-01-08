@@ -1,5 +1,4 @@
 module Invoicerb
-
   class FormatterContent
     def initialize(data_hash, config_hash)
       @data = data_hash
@@ -10,13 +9,21 @@ module Invoicerb
       @data
     end
 
+    def data_jobs
+      data[:jobs]
+    end
+
+    def data_totals
+      data[:totals]
+    end
+
     def config_hash
       @config_hash
     end
 
     def jobs
       rows = []
-      jobs = data[:jobs]
+      jobs = data_jobs
       jobs.each do |job|
         rows << build_job(job)
       end
@@ -41,14 +48,14 @@ module Invoicerb
       "#{vat}%"
     end
 
-    def data_totals
-      total_without_taxes = merge_values(data[:total_without_taxes])
-      total_discounts     = merge_values(data[:total_discounts])
-      total_vat           = merge_values(data[:total_vat])
-      total               = merge_values(data[:total])
+    def totals
+      total_without_taxes = merge_values(data_totals[:total_without_taxes])
+      total_discounts     = merge_values(data_totals[:total_discounts])
+      total_vat           = merge_values(data_totals[:total_vat])
+      total               = merge_values(data_totals[:total])
       [
-        [{:content => "", :colspan => 3}, {:content => "<b>total less taxes</b>" , :colspan => 2, :align => :right, inline_format:true }, total_without_taxes],
         [{:content => "", :colspan => 3}, {:content => "<b>discounts</b>"           , :colspan => 2, :align => :right, inline_format:true }, total_discounts],
+        [{:content => "", :colspan => 3}, {:content => "<b>total less taxes</b>" , :colspan => 2, :align => :right, inline_format:true }, total_without_taxes],
         [{:content => "", :colspan => 3}, {:content => "<b>taxes (#{vat_str})</b>"     , :colspan => 2, :align => :right, inline_format:true }, total_vat],
         [{:content => "", :colspan => 3}, {:content => "<b>TOTAL</b>"               , :colspan => 2, :align => :right, inline_format:true }, {:content => "<b>#{total}</b>", :inline_format => true} ]
       ]

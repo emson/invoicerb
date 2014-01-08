@@ -9,7 +9,7 @@ module Invoicerb
       invoice_details
       contact
       description
-      items_table(data, data_totals)
+      items_table(data, @formatter.totals)
       payment_details
       footer
       pdf.render_file(output_file)
@@ -22,7 +22,7 @@ module Invoicerb
       end
     end
 
-    def items_table(data, data_totals)
+    def items_table(data, totals)
       pdf.move_down 20
       pdf.font_size(SIZE) do
         # pdf.table(data, :position => :center, :row_colors => ["FFFFFF"], :header => true, :width => 540, :column_widths => {0=>5,1=>5,2=>290,3=>40,4=>50,5=>50}) do
@@ -49,24 +49,11 @@ module Invoicerb
     end
 
     def data
-      # [
-      #   ['Qty', 'Unit', 'Description', 'Discount', 'Tax', 'Price', 'Total'],
-      #   [1, 'cm', 'Web site design and build using Vim and stuff xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', '0', '20%', "\u00A3486.75", "\u00A3584.10"],
-      #   [2, 'km', 'Registering the domain name', '10', '20%', "\u00A310", "\u00A321.60"],
-      #   # [ {:content => "5x1", :colspan => 4}, {:content => totals_table, :colspan => 2}]
-      #   [ {:content => "", :colspan => 4}, {:content => totals_table(data_totals), :colspan => 3}]
-      # ]
       rows = []
       rows << ['Qty', 'Unit', 'Description', 'Discount', 'Price', 'Total']
-      jobs =  @formatter.jobs
-      rows = rows + jobs
-      # rows << [ {:content => "", :colspan => 3}, {:content => 'Discounts', :align => :right, :colspan => 2}, 'pow']
-      rows = rows + data_totals
+      rows = rows + @formatter.jobs
+      rows = rows + @formatter.totals
       rows
-    end
-
-    def data_totals
-      @formatter.data_totals
     end
 
     def data_invoice_details
