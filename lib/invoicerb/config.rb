@@ -6,7 +6,7 @@ module Invoicerb
     PREFIX = 'env_'
 
     def environment
-      shell_env["RAILS_ENV"] || shell_env["RACK_ENV"] || shell_env["ENV"] || 'development'
+      shell_env["RAILS_ENV"] || shell_env["RACK_ENV"] || shell_env["ENV"] || 'production'
     end
 
     def shell_env
