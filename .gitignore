@@ -3,4 +3,5 @@ tmp/
 system/
 example*.rb
 *.pdf
+pkg/*
 
