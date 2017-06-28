@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    invoicerb (0.1.1)
+    invoicerb (0.1.2)
       gli (= 2.8.1)
       mustache (~> 0.99)
       prawn (= 0.13.1)
@@ -115,4 +115,4 @@ DEPENDENCIES
   rspec (~> 3.0)
 
 BUNDLED WITH
-   1.11.2
+   1.15.1

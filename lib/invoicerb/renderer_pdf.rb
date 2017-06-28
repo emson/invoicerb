@@ -3,13 +3,13 @@ module Invoicerb
   class RendererPdf
     SIZE = 8
 
-    def build(formatter, config_hash, output_file='output.pdf')
+    def build(formatter, config_hash, invoice_type, output_file='output.pdf')
       @formatter = formatter
-      title
+      title(invoice_type)
       invoice_details
       contact
       description
-      items_table(data, @formatter.totals)
+      items_table(@formatter.jobs, @formatter.totals)
       payment_details
       footer
       pdf.render_file(output_file)
@@ -22,17 +22,20 @@ module Invoicerb
       end
     end
 
-    def items_table(data, totals)
+    def items_table(jobs, totals)
+      data = [['Qty', 'Unit', 'Description', 'Discount', 'Price', 'Total']]
+      data = data + jobs
+      data = data + totals
       pdf.move_down 20
       pdf.font_size(SIZE) do
         # pdf.table(data, :position => :center, :row_colors => ["FFFFFF"], :header => true, :width => 540, :column_widths => {0=>5,1=>5,2=>290,3=>40,4=>50,5=>50}) do
-        pdf.table(data, :position => :left, :row_colors => ["FFFFFF"], :header => true, :width => 520) do
+        pdf.table(data, :position => :left, :row_colors => ["FFFFFF"], :header => true, :width => 520, column_widths: [30,30,310,40,50,60]) do
           # set table header
           row(0).borders = [:bottom]
           row(0).border_width = 2
           row(0).font_style = :bold
           # underline each item row
-          (1..data.size - 2).each do |i|
+          (1..data.size - 1).each do |i|
             row(i).borders = [:bottom]
           end
           # change formatting for the totals rows
@@ -40,20 +43,12 @@ module Invoicerb
           row_end   = data.size - 1
           row(row_start..row_end).borders = []
           # underline the grand total cells in bold
-          cols = cells.columns(2..-1)
+          cols = cells.columns(3..-1)
           selected_cells = cols.rows(data.size - 2..-1)
           selected_cells.borders = [:bottom]
           selected_cells.border_width = 2
         end
       end
-    end
-
-    def data
-      rows = []
-      rows << ['Qty', 'Unit', 'Description', 'Discount', 'Price', 'Total']
-      rows = rows + @formatter.jobs
-      rows = rows + @formatter.totals
-      rows
     end
 
     def data_invoice_details
@@ -64,15 +59,15 @@ module Invoicerb
       @formatter.contact
     end
 
-    def bounding_box
-      pdf.bounding_box([10, pdf.cursor], :width => 400, :height => pdf.cursor) do
-        pdf.transparent(0.5) { pdf.stroke_bounds }
-        pdf.text "Inside box"
-      end
-    end
+    # def bounding_box
+    #   pdf.bounding_box([10, pdf.cursor], :width => 400, :height => pdf.cursor) do
+    #     pdf.transparent(0.5) { pdf.stroke_bounds }
+    #     pdf.text "Inside box"
+    #   end
+    # end
 
-    def title
-      pdf.text "<b>Invoice</b>", size:20, inline_format:true
+    def title(invoice_type='Invoice')
+      pdf.text "<b>#{invoice_type}</b>", size:20, inline_format:true
     end
 
     def invoice_details

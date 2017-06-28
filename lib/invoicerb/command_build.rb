@@ -9,7 +9,16 @@ module Invoicerb
       config_hash  = config.config
       output       = output_name(tokens)
       formatter    = FormatterContent.new(invoice_hash, config_hash)
-      renderer_pdf.build(formatter, config_hash, output)
+      renderer_pdf.build(formatter, config_hash, 'Invoice', output)
+    end
+
+    def build_quote(tokens)
+      dsl_invoice.dsl_load(invoice_name(tokens))
+      invoice_hash = dsl_invoice.to_hash
+      config_hash  = config.config
+      output       = output_name(tokens)
+      formatter    = FormatterContent.new(invoice_hash, config_hash)
+      renderer_pdf.build(formatter, config_hash, 'Quote', output)
     end
 
     def output_name(tokens)

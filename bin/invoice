@@ -61,6 +61,18 @@ command :build do |c|
   end
 end
 
+desc 'Build a Quote PDF'
+arg_name 'quote_name'
+command :quote do |c|
+  c.action do |global_options, options, args|
+    help_now!('quote_name is required') if args.empty?
+    invoice_name = args.shift
+    tokens = { :invoice_name => invoice_name }
+    command = Invoicerb::CommandBuild.new
+    command.build_quote(tokens)
+  end
+end
+
 # desc 'Describe some switch here'
 # switch [:s,:switch]
 

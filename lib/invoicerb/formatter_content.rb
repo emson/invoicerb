@@ -53,12 +53,13 @@ module Invoicerb
       total_discounts     = merge_values(data_totals[:total_discounts])
       total_vat           = merge_values(data_totals[:total_vat])
       total               = merge_values(data_totals[:total])
-      [
-        [{:content => "", :colspan => 3}, {:content => "<b>discounts</b>"           , :colspan => 2, :align => :right, inline_format:true }, total_discounts],
-        [{:content => "", :colspan => 3}, {:content => "<b>total less taxes</b>" , :colspan => 2, :align => :right, inline_format:true }, total_without_taxes],
-        [{:content => "", :colspan => 3}, {:content => "<b>taxes (#{vat_str})</b>"     , :colspan => 2, :align => :right, inline_format:true }, total_vat],
-        [{:content => "", :colspan => 3}, {:content => "<b>TOTAL</b>"               , :colspan => 2, :align => :right, inline_format:true }, {:content => "<b>#{total}</b>", :inline_format => true} ]
+      rows = [
+        ["", "", "", {:content => "<b>discounts</b>",          :colspan => 2, :align => :right, inline_format:true }, total_discounts],
+        ["", "", "", {:content => "<b>total less taxes</b>",   :colspan => 2, :align => :right, inline_format:true }, total_without_taxes],
+        ["", "", "", {:content => "<b>taxes (#{vat_str})</b>", :colspan => 2, :align => :right, inline_format:true }, total_vat],
+        [{:content => "", :colspan => 2}, "", {:content => "<b>TOTAL</b>", colspan: 2, :align => :right, inline_format:true }, {:content => "<b>#{total}</b>", :inline_format => true} ] # need initial colspan to fix width bug
       ]
+      rows
     end
 
     def merge_values(hash)

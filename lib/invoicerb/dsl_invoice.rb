@@ -9,6 +9,7 @@ module Invoicerb
       # default settings
       @date       = DateTime.now.strftime('%Y-%m-%d')
       @invoice_id = 'INV00001'
+      @quote_id   = 'QOT00001'
       @client     = 'No Client Set'
     end
 
@@ -42,6 +43,10 @@ module Invoicerb
 
     def date(my_date)
       @date = my_date
+    end
+
+    def quote_id(my_quote_id)
+      @quote_id = my_quote_id
     end
 
     def invoice_id(my_invoice_id)
