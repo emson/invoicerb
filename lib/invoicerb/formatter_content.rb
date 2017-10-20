@@ -74,10 +74,15 @@ module Invoicerb
 
     def contact
       client = data[:client]
+      client_address = split_address(data.fetch(:client_address, ''))
       [
         [{:content => load_template('address.erb'), inline_format:true },
-         {:content => "<b>Client</b>\n#{client}", :align => :right, inline_format:true }]
+         {:content => "<b>Client</b>\n#{client}\n#{client_address}", :align => :right, inline_format:true }]
       ]
+    end
+
+    def split_address(address)
+      address.gsub(',', ",\n")
     end
 
     def invoice_details

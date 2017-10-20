@@ -11,6 +11,7 @@ module Invoicerb
       @invoice_id = 'INV00001'
       @quote_id   = 'QOT00001'
       @client     = 'No Client Set'
+      @client_address = 'No Client Address Set'
     end
 
     def prefix
@@ -57,6 +58,10 @@ module Invoicerb
       @client = my_client
       # extract the client child block
       instance_exec(&block)
+    end
+
+    def client_address(my_client_address)
+      @client_address = my_client_address
     end
 
     def job(qty, desc, price, discount)
@@ -108,6 +113,7 @@ module Invoicerb
         date: @date,
         invoice_id: @invoice_id,
         client: @client,
+        client_address: @client_address,
         jobs: jobs,
         totals: {
           total_without_taxes: Value.new(build_str(prefix, total_without_taxes)).to_hash,
