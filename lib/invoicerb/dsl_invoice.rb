@@ -11,7 +11,7 @@ module Invoicerb
       @invoice_id = 'INV00001'
       @quote_id   = 'QOT00001'
       @client     = 'No Client Set'
-      @client_address = 'No Client Address Set'
+      @client_address = ''
     end
 
     def prefix
